@@ -3,11 +3,15 @@ package com.example.accioShop.service;
 import com.example.accioShop.Repository.CustomerRepository;
 import com.example.accioShop.dto.request.CustomerRequest;
 import com.example.accioShop.dto.response.CustomerResponse;
+import com.example.accioShop.enums.Gender;
 import com.example.accioShop.exception.CustomerNotFoundException;
 import com.example.accioShop.model.Customer;
+import com.example.accioShop.transformer.CustomerTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,11 +28,11 @@ public class CustomerService {
 //    In case of DTO
     public CustomerResponse addCustomer(CustomerRequest customerRequest) {
 
-        Customer customer = CustomerRequestToCustomer(customerRequest);
+        Customer customer = CustomerTransformer.CustomerRequestToCustomer(customerRequest);
 
         Customer savedCustomer = customerRepository.save(customer);
 
-        return CustomerToCustomerResponse(customer);
+        return CustomerTransformer.CustomerToCustomerResponse(customer);
     }
 
 //    public Customer getCustomerById(int id) {
@@ -54,45 +58,46 @@ public CustomerResponse getCustomerById(int id) {
     }
 
     Customer customer = optionalCustomer.get();
-    return CustomerToCustomerResponse(customer);
+    return CustomerTransformer.CustomerToCustomerResponse(customer);
 
 }
-   public CustomerResponse CustomerToCustomerResponse(Customer customer)
-   {
-//       CustomerResponse customerResponse = new CustomerResponse();
-//       customerResponse.setName(customer.getName());
-//       customerResponse.setEmail(customer.getEmail());
-//       customerResponse.setCreatedAt(customer.getCreatedAt());
+
+    public List<CustomerResponse> getCustomerByGender(Gender gender) {
+
+//        List<Customer>customers = customerRepository.findAll();
+//        List<Customer>customerByGender = new ArrayList<>();
 //
-//       return customerResponse;
+//        for(Customer customer: customers)
+//        {
+//            if(customer.getGender() == gender)
+//            {
+//                customerByGender.add(customer);
+//            }
+//        }
 
-//       we can write all these in this way as well with the help of builder
+        List<Customer>customerByGender = customerRepository.findByGender(gender);
 
-       return CustomerResponse.builder()
-               .name(customer.getName())
-               .email(customer.getEmail())
-               .createdAt(customer.getCreatedAt())
-               .build();
-   }
+        List<CustomerResponse>customerResponses = new ArrayList<>();
 
-   public Customer CustomerRequestToCustomer(CustomerRequest customerRequest)
-   {
-//       Customer customer = new Customer();
-//       customer.setName(customerRequest.getName());
-//       customer.setAge(customerRequest.getAge());
-//       customer.setEmail(customerRequest.getEmail());
-//       customer.setGender(customerRequest.getGender());
-//       customer.setMobNo(customerRequest.getMobNo());
-//
-//       return customer;
-//        you can write all these in other way as well with the help of builder..
+        for(Customer customer: customerByGender)
+        {
+            customerResponses.add(CustomerTransformer.CustomerToCustomerResponse(customer));
+        }
 
-       return Customer.builder()
-               .name(customerRequest.getName())
-               .age(customerRequest.getAge())
-               .email(customerRequest.getEmail())
-               .gender(customerRequest.getGender())
-               .mobNo(customerRequest.getMobNo())
-               .build();
-   }
+        return customerResponses;
+
+    }
+
+    public List<CustomerResponse> getCustomerByAgeGreaterThanEqual(int age) {
+
+        List<Customer>customers = customerRepository.findByAgeGreaterThanEqual(age);
+        List<CustomerResponse>customerResponses = new ArrayList<>();
+
+        for(Customer customer: customers)
+        {
+            customerResponses.add(CustomerTransformer.CustomerToCustomerResponse(customer));
+        }
+
+        return customerResponses;
+    }
 }

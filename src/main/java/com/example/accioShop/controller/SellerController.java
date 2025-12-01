@@ -1,7 +1,8 @@
 package com.example.accioShop.controller;
 
-import com.example.accioShop.exception.SellerNotFoundById;
-import com.example.accioShop.model.Seller;
+import com.example.accioShop.dto.request.SellerRequest;
+import com.example.accioShop.dto.response.SellerResponse;
+import com.example.accioShop.exception.SellerNotFoundException;
 import com.example.accioShop.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,10 @@ public class SellerController {
     SellerService sellerService;
 
     @PostMapping
-    public ResponseEntity addSeller(@RequestBody Seller seller)
+    public ResponseEntity addSeller(@RequestBody SellerRequest sellerRequest)
     {
-        Seller savedSeller = sellerService.addSeller(seller);
-        return new ResponseEntity(savedSeller, HttpStatus.CREATED);
+        SellerResponse response = sellerService.addSeller(sellerRequest);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -28,7 +29,7 @@ public class SellerController {
         try {
             return new ResponseEntity<>(sellerService.getSellerById(id),HttpStatus.FOUND);
         }
-        catch (SellerNotFoundById e)
+        catch (SellerNotFoundException e)
         {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }

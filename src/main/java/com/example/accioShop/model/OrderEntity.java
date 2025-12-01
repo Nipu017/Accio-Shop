@@ -2,10 +2,7 @@ package com.example.accioShop.model;
 
 import com.example.accioShop.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class OrderEntity {
 
     @Id
@@ -29,7 +27,11 @@ public class OrderEntity {
     @Enumerated(value = EnumType.STRING)
     private OrderStatus status;
 
-    @ManyToMany
+    @ManyToOne
+    @JoinColumn(name = "Customer_id")
+    Customer customer;
+
+    @ManyToMany        //changed
     @JoinTable
     List<Product>products = new ArrayList<>();
 }
