@@ -37,6 +37,11 @@ public class OrderService {
         OrderEntity orderEntity = OrderTransformer.OrderRequestToOrder(orderRequest);
 
 //        relationshit
+        orderEntity.setCustomer(customer);
+        customer.getOrders().add(orderEntity);
 
+        customerRepository.save(customer);
+
+        return OrderTransformer.OrderToOrderResponse(orderEntity);
     }
 }

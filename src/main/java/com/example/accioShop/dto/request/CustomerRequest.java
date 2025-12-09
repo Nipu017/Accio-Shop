@@ -1,15 +1,13 @@
 package com.example.accioShop.dto.request;
 
 import com.example.accioShop.enums.Gender;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class CustomerRequest {
 
     private String name;

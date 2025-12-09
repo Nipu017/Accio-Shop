@@ -29,5 +29,14 @@ public class AddressController {
         }
     }
 
+//    @PutMapping
+//    public ResponseEntity updateAddress(@RequestParam("Customer-id") int customerId,
+//                                        @RequestBody AddressRequest addressRequest)
+//    {
+//        AddressResponse response = addressService.updateAddress(customerId,addressRequest);
+//        return new ResponseEntity(response,HttpStatus.OK);
+//    }
+
+
 
 }

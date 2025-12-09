@@ -31,7 +31,7 @@ public class OrderEntity {
     @JoinColumn(name = "Customer_id")
     Customer customer;
 
-    @ManyToMany        //changed
+    @ManyToMany
     @JoinTable
     List<Product>products = new ArrayList<>();
 }

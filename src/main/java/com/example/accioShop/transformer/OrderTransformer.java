@@ -21,6 +21,7 @@ public class OrderTransformer {
         return OrderResponse.builder()
                 .value(orderEntity.getValue())
                 .status(orderEntity.getStatus())
+                .customer(CustomerTransformer.CustomerToCustomerResponse(orderEntity.getCustomer()))
                 .build();
     }
 }

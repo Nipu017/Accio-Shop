@@ -77,4 +77,18 @@ public class CustomerController {
         return new ResponseEntity<>(responses,HttpStatus.OK);
     }
 
+    @DeleteMapping()
+    public ResponseEntity deleteCustomer(@RequestParam("customer-id") int customerId)
+    {
+        try {
+            CustomerResponse response = customerService.deleteCustomer(customerId);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        catch(Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }

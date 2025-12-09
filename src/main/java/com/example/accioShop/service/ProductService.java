@@ -4,6 +4,7 @@ import com.example.accioShop.Repository.ProductRepository;
 import com.example.accioShop.Repository.SellerRepository;
 import com.example.accioShop.dto.request.ProductRequest;
 import com.example.accioShop.dto.response.ProductResponse;
+import com.example.accioShop.enums.Category;
 import com.example.accioShop.exception.SellerNotFoundException;
 import com.example.accioShop.model.Product;
 import com.example.accioShop.model.Seller;
@@ -11,6 +12,8 @@ import com.example.accioShop.transformer.ProductTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,5 +48,18 @@ public class ProductService {
         Product savedProduct = savedEntity.getProducts().get(size-1);
 
         return ProductTransformer.ProductToProductResponse(savedProduct);
+    }
+
+    public List<ProductResponse> getAllProductOfParticularCategory(Category category) {
+
+        List<Product>products = productRepository.getByCategory(category);
+        List<ProductResponse>productResponses = new ArrayList<>();
+
+        for(Product product: products)
+        {
+            productResponses.add(ProductTransformer.ProductToProductResponse(product));
+        }
+
+        return productResponses;
     }
 }

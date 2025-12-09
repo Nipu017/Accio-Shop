@@ -2,12 +2,14 @@ package com.example.accioShop.controller;
 
 import com.example.accioShop.dto.request.ProductRequest;
 import com.example.accioShop.dto.response.ProductResponse;
-import com.example.accioShop.dto.response.SellerResponse;
+import com.example.accioShop.enums.Category;
 import com.example.accioShop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/product")
@@ -28,5 +30,13 @@ public class ProductController {
            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
        }
     }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity getAllProductOfParticularCategory(@PathVariable Category category)
+    {
+        List<ProductResponse> responses = productService.getAllProductOfParticularCategory(category);
+        return new ResponseEntity(responses,HttpStatus.OK);
+    }
+
 
 }

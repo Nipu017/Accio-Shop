@@ -52,7 +52,7 @@ public class Customer {
     @JsonBackReference
     List<Review> reviews = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore
     List<OrderEntity>orders = new ArrayList<>();
 }

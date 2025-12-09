@@ -11,6 +11,7 @@ import com.example.accioShop.transformer.AddressTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,4 +42,17 @@ public class AddressService {
 
         return AddressTransformer.AddressToAddressResponse(savedAddress);
     }
+
+//    public List<AddressResponse> updateAddress(int customerId, AddressRequest addressRequest) {
+//
+//        Optional<Customer>optionalCustomer = customerRepository.findById(customerId);
+//
+//        if(optionalCustomer.isEmpty())
+//            throw new CustomerNotFoundException("Invalid CustomerId");
+//
+//        Customer customer = optionalCustomer.get();
+//       Address address = customer.getAdd
+//
+//
+//    }
 }

@@ -100,4 +100,16 @@ public CustomerResponse getCustomerById(int id) {
 
         return customerResponses;
     }
+
+    public CustomerResponse deleteCustomer(int customerId) {
+
+        Optional<Customer>optionalCustomer = customerRepository.findById(customerId);
+        if(optionalCustomer.isEmpty())
+            throw new CustomerNotFoundException("Invalid Customer Id");
+
+        Customer customer = optionalCustomer.get();
+        customerRepository.deleteById(customerId);
+
+        return CustomerTransformer.CustomerToCustomerResponse(customer);
+    }
 }
